@@ -13,7 +13,7 @@ import com.capgemini.iplleagueanalyser.model.Bowling;
 public class FlexibleSort<T> implements Comparator<T> {
 	public enum Order {
 		BAT_AVG, BAT_SR, BOUNDARIES, SR_AND_BOUNDARIES, AVG_AND_SR, RUNS_AND_AVG, BOWL_AVG, BOWL_SR, ECONOMY,
-		BOWL_SR_AND_ECON, BOWL_SR_AND_WICKET_HAULS, BOWL_AVG_AND_SR, BOWL_WKTS_AND_AVG
+		BOWL_SR_AND_ECON, BOWL_SR_AND_WICKET_HAULS, BOWL_AVG_AND_SR, BOWL_WKTS_AND_AVG, MAX100_AND_BAT_AVG
 	}
 
 	public Order sortingBy;
@@ -137,6 +137,17 @@ public class FlexibleSort<T> implements Comparator<T> {
 				if (bowl2.getAvg().contains("-"))
 					bowl2.setAvg("999999");
 				return (int) setValue(Double.parseDouble(bowl1.getAvg()) - Double.parseDouble((bowl2.getAvg())));
+			}
+			return (int) value;
+
+		case MAX100_AND_BAT_AVG:
+			value = Integer.parseInt(bat2.getHundreds()) - Integer.parseInt(bat1.getHundreds());
+			if (value == 0) {
+				if ((bat1).getAvg().contains("-"))
+					bat1.setAvg("0");
+				if (bat2.getAvg().contains("-"))
+					bat2.setAvg("999999");
+				return (int) setValue(Double.parseDouble(bat2.getAvg()) - Double.parseDouble((bat1.getAvg())));
 			}
 			return (int) value;
 		}

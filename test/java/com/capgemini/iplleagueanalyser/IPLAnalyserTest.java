@@ -136,4 +136,11 @@ public class IPLAnalyserTest {
 		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_AVG, "Bowler");
 		assertEquals("83.2,11", sortedBattingList.get(0).getAvg() + "," + sortedBowlingList.get(0).getAvg());
 	}
+
+	@Test
+	public void givenBattingData_ShouldReturnMaxHundredsWithBestBattingAvg() throws IPLAnalyserException {
+		iplAnalyser.loadBattingData(BATTING_DATA_PATH);
+		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.MAX100_AND_BAT_AVG, "Batsman");
+		assertEquals("David Warner", sortedBattingList.get(0).getPlayer());
+	}
 }

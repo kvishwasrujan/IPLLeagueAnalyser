@@ -105,10 +105,18 @@ public class IPLAnalyserTest {
 		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_SR_AND_ECON, "Bowler");
 		assertEquals("8.66", sortedBowlingList.get(0).getStrikeRate());
 	}
+
 	@Test
 	public void givenBowlingData_WhenSortedBySRandWicketHauls_ShouldReturnBestSortedList() throws IPLAnalyserException {
 		iplAnalyser.loadBowlingData(BOWLING_DATA_PATH);
-		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_SR_AND_WICKET_HAULS,"Bowler");
+		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_SR_AND_WICKET_HAULS, "Bowler");
 		assertEquals("16.81", sortedBowlingList.get(0).getStrikeRate());
+	}
+
+	@Test
+	public void givenBowlingData_WhenSortedByAvgandSr_ShouldReturnBestSortedList() throws IPLAnalyserException {
+		iplAnalyser.loadBowlingData(BOWLING_DATA_PATH);
+		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_AVG_AND_SR, "Bowler");
+		assertEquals("11", sortedBowlingList.get(0).getAvg());
 	}
 }

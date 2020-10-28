@@ -26,54 +26,53 @@ import com.opencsv.exceptions.CsvException;
 public class IPLAnalyser {
 	List<Batting> battingList;
 	List<Bowling> bowlingList;
-	
+
 	/**
 	 * @param battingDataPath
-	 * @return
 	 * @throws IPLAnalyserException
 	 */
 	public int loadBattingData(String battingDataPath) throws IPLAnalyserException {
-		try(Reader reader = Files.newBufferedReader(Paths.get(battingDataPath));) {
+		try (Reader reader = Files.newBufferedReader(Paths.get(battingDataPath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			try{
+			try {
 				battingList = csvBuilder.getCSVFileList(reader, Batting.class);
-			}catch(CsvException e) {
-				throw new IPLAnalyserException("Invalid class",IPLAnalyserException.ExceptionType.INVALID_CLASS_TYPE);
+			} catch (CsvException e) {
+				throw new IPLAnalyserException("Invalid class", IPLAnalyserException.ExceptionType.INVALID_CLASS_TYPE);
 			}
 		} catch (IOException e) {
-			throw new IPLAnalyserException("Invalid file location",IPLAnalyserException.ExceptionType.INVALID_FILE_PATH);
-		} 
+			throw new IPLAnalyserException("Invalid file location",
+					IPLAnalyserException.ExceptionType.INVALID_FILE_PATH);
+		}
 		return battingList.size();
 	}
-	
+
 	/**
 	 * @param bowlingDataPath
-	 * @return
 	 * @throws IPLAnalyserException
 	 */
 	public int loadBowlingData(String bowlingDataPath) throws IPLAnalyserException {
-		try(Reader reader = Files.newBufferedReader(Paths.get(bowlingDataPath));) {
+		try (Reader reader = Files.newBufferedReader(Paths.get(bowlingDataPath));) {
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			try{
+			try {
 				bowlingList = csvBuilder.getCSVFileList(reader, Bowling.class);
-			}catch(CsvException e) {
-				throw new IPLAnalyserException("Invalid class",IPLAnalyserException.ExceptionType.INVALID_CLASS_TYPE);
+			} catch (CsvException e) {
+				throw new IPLAnalyserException("Invalid class", IPLAnalyserException.ExceptionType.INVALID_CLASS_TYPE);
 			}
-			
+
 		} catch (IOException e1) {
-			throw new IPLAnalyserException("Invalid file location",IPLAnalyserException.ExceptionType.INVALID_FILE_PATH);
+			throw new IPLAnalyserException("Invalid file location",
+					IPLAnalyserException.ExceptionType.INVALID_FILE_PATH);
 		}
 		return bowlingList.size();
 	}
-	
+
 	/**
 	 * @param order
-	 * @return
 	 * @throws IPLAnalyserException
 	 */
-	public List<Batting> getSortedData(FlexibleSort.Order order) throws IPLAnalyserException {
-		if(battingList==null||battingList.size()==0) {
-			throw new IPLAnalyserException("No batting list data",IPLAnalyserException.ExceptionType.NO_DATA);
+	public List<Batting> getSortedList(FlexibleSort.Order order) throws IPLAnalyserException {
+		if (battingList == null || battingList.size() == 0) {
+			throw new IPLAnalyserException("No batting list data", IPLAnalyserException.ExceptionType.NO_DATA);
 		}
 		FlexibleSort flexibleSort = new FlexibleSort(order);
 		List<Batting> sortedBattingList = battingList;

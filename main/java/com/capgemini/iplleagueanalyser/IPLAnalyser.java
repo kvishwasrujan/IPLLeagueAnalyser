@@ -1,22 +1,17 @@
 package com.capgemini.iplleagueanalyser;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.capgemini.indianstatecensusanalyser.customexception.CSVBuilderFactory;
 import com.capgemini.indianstatecensusanalyser.customexception.ICSVBuilder;
 import com.capgemini.iplleagueanalyser.model.Batting;
 import com.capgemini.iplleagueanalyser.model.Bowling;
 import com.capgemini.iplleagueanalyser.service.FlexibleSort;
-import com.capgemini.iplleagueanalyser.service.FlexibleSort.Order;
-import com.google.gson.Gson;
 import com.opencsv.exceptions.CsvException;
 
 /**
@@ -69,19 +64,28 @@ public class IPLAnalyser {
 	}
 
 	/**
+	 * @param <T>
 	 * @param order
-	 * @return sortedBattingList
+	 * @param playerType
+	 * @return sortedList
 	 * @throws IPLAnalyserException
 	 */
-	public List<Batting> getSortedList(FlexibleSort.Order order) throws IPLAnalyserException {
-		if (battingList == null || battingList.size() == 0) {
-			throw new IPLAnalyserException("No batting list data", IPLAnalyserException.ExceptionType.NO_DATA);
-		}
+	public <T> List<T> getSortedList(FlexibleSort.Order order, String playerType) throws IPLAnalyserException {
 		FlexibleSort flexibleSort = new FlexibleSort(order);
-		List<Batting> sortedBattingList = battingList;
-		Collections.sort(sortedBattingList, flexibleSort);
-		System.out.println(sortedBattingList);
-		return sortedBattingList;
+		List<T> sortedList;
+		if (playerType.equals("Batsman")) {
+			if (battingList == null || battingList.size() == 0)
+				throw new IPLAnalyserException("No batting list data", IPLAnalyserException.ExceptionType.NO_DATA);
+			sortedList = (List<T>) battingList;
+		} else if (playerType.equals("Bowler")) {
+			if (bowlingList == null || bowlingList.size() == 0)
+				throw new IPLAnalyserException("No bowling list data", IPLAnalyserException.ExceptionType.NO_DATA);
+			sortedList = (List<T>) bowlingList;
+		} else
+			throw new IPLAnalyserException("Wrong player type", IPLAnalyserException.ExceptionType.WRONG_PLAYER_TYPE);
+		Collections.sort(sortedList, flexibleSort);
+		System.out.println(sortedList);
+		return sortedList;
 	}
 
 }

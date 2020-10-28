@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.capgemini.indianstatecensusanalyser.customexception.CSVBuilderFactory;
 import com.capgemini.indianstatecensusanalyser.customexception.ICSVBuilder;
@@ -44,7 +45,7 @@ public class IPLAnalyser {
 
 	/**
 	 * @param bowlingDataPath
-	 * @return bowlingList.size()
+	 * @return bowlingList.size(
 	 * @throws IPLAnalyserException
 	 */
 	public int loadBowlingData(String bowlingDataPath) throws IPLAnalyserException {
@@ -84,8 +85,30 @@ public class IPLAnalyser {
 		} else
 			throw new IPLAnalyserException("Wrong player type", IPLAnalyserException.ExceptionType.WRONG_PLAYER_TYPE);
 		Collections.sort(sortedList, flexibleSort);
+		sortedList = IPLAnalyser.filterList(sortedList, order);
 		System.out.println(sortedList);
 		return sortedList;
+	}
+
+	/**
+	 * @param <T>
+	 * @param list
+	 * @param order
+	 * @return list
+	 */
+	private static <T> List<T> filterList(List<T> list, FlexibleSort.Order order) {
+		if (list.get(0).getClass().equals(Batting.class)) {
+			List<Batting> filteredList = (List<Batting>) list;
+			if (order.equals(FlexibleSort.Order.ZERO_100AND50_BEST_AVG))
+				return (List<T>) filteredList.stream()
+						.filter(batting -> batting.getHundreds().equals("0") && batting.getFifties().equals("0"))
+						.collect(Collectors.toList());
+			else
+				return (List<T>) filteredList;
+		} else {
+			List<Bowling> filteredList = (List<Bowling>) list;
+		}
+		return list;
 	}
 
 }

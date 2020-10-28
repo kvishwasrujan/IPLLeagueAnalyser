@@ -126,4 +126,14 @@ public class IPLAnalyserTest {
 		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_WKTS_AND_AVG, "Bowler");
 		assertEquals("26", sortedBowlingList.get(0).getWickets());
 	}
+
+	@Test
+	public void givenBattingAndBowlingData_ShouldReturnCricketersWithBestBattingBowlingAvg()
+			throws IPLAnalyserException {
+		iplAnalyser.loadBattingData(BATTING_DATA_PATH);
+		iplAnalyser.loadBowlingData(BOWLING_DATA_PATH);
+		sortedBattingList = iplAnalyser.getSortedList(FlexibleSort.Order.BAT_AVG, "Batsman");
+		sortedBowlingList = iplAnalyser.getSortedList(FlexibleSort.Order.BOWL_AVG, "Bowler");
+		assertEquals("83.2,11", sortedBattingList.get(0).getAvg() + "," + sortedBowlingList.get(0).getAvg());
+	}
 }

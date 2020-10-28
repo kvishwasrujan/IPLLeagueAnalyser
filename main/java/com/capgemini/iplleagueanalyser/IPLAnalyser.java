@@ -27,8 +27,10 @@ public class IPLAnalyser {
 	List<Batting> battingList;
 	List<Bowling> bowlingList;
 
+	
 	/**
 	 * @param battingDataPath
+	 * @return battingList.size()
 	 * @throws IPLAnalyserException
 	 */
 	public int loadBattingData(String battingDataPath) throws IPLAnalyserException {
@@ -46,8 +48,10 @@ public class IPLAnalyser {
 		return battingList.size();
 	}
 
+	
 	/**
 	 * @param bowlingDataPath
+	 * @return bowlingList.size()
 	 * @throws IPLAnalyserException
 	 */
 	public int loadBowlingData(String bowlingDataPath) throws IPLAnalyserException {
@@ -66,8 +70,10 @@ public class IPLAnalyser {
 		return bowlingList.size();
 	}
 
+	
 	/**
 	 * @param order
+	 * @return sortedBattingList
 	 * @throws IPLAnalyserException
 	 */
 	public List<Batting> getSortedList(FlexibleSort.Order order) throws IPLAnalyserException {

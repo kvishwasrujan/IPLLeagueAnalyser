@@ -27,7 +27,6 @@ public class IPLAnalyser {
 	List<Batting> battingList;
 	List<Bowling> bowlingList;
 
-	
 	/**
 	 * @param battingDataPath
 	 * @return battingList.size()
@@ -48,7 +47,6 @@ public class IPLAnalyser {
 		return battingList.size();
 	}
 
-	
 	/**
 	 * @param bowlingDataPath
 	 * @return bowlingList.size()
@@ -70,7 +68,6 @@ public class IPLAnalyser {
 		return bowlingList.size();
 	}
 
-	
 	/**
 	 * @param order
 	 * @return sortedBattingList
@@ -86,4 +83,5 @@ public class IPLAnalyser {
 		System.out.println(sortedBattingList);
 		return sortedBattingList;
 	}
+
 }
